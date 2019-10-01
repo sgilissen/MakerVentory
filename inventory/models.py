@@ -3,10 +3,16 @@ from django.db import models
 # Create your models here.
 class Location(models.Model):
     name = models.TextField(max_length=50)
-    floor_plan = models.ImageField()
+    floor_plan = models.ImageField(blank=True)
+
+    def __str__(self):
+        return self.name
 
 class ItemType(models.Model):
     name = models.TextField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class Item(models.Model):
     item_type = models.ForeignKey(ItemType, on_delete=models.CASCADE)
@@ -14,4 +20,8 @@ class Item(models.Model):
     description = models.TextField(max_length=250)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     location_detail = models.TextField(max_length=50)
-    photo = models.ImageField()
+    photo = models.ImageField(blank=True)
+    data_sheet = models.URLField(max_length=250, blank=True)
+
+    def __str__(self):
+        return self.name
