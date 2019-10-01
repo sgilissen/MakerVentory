@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Location, Item, ItemType
-from django.contrib.admin import AdminSite
 from django.utils.safestring import mark_safe
 
 # Register your models here.
@@ -18,8 +17,10 @@ class ItemTypeAdmin(admin.ModelAdmin):
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     def datasheet_link(self, obj):
-        return mark_safe('<a href="%s">%s %s</a>' % (obj.data_sheet, obj.name, "datasheet"))
-
+        if obj.data_sheet == '':
+            return('None')
+        else:
+            return mark_safe('<a href="%s">%s %s</a>' % (obj.data_sheet, obj.name, "datasheet"))
 
     list_display = ('name', 'item_type', 'location', 'location_detail', 'datasheet_link')
     search_fields = ['name']
