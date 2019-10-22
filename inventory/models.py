@@ -14,6 +14,7 @@ class ItemType(models.Model):
     def __str__(self):
         return self.name
 
+
 class Item(models.Model):
     item_type = models.ForeignKey(ItemType, on_delete=models.CASCADE)
     name = models.TextField(max_length=100)
@@ -21,7 +22,24 @@ class Item(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     location_detail = models.TextField(max_length=50)
     photo = models.ImageField(blank=True)
-    data_sheet = models.URLField(max_length=250, blank=True)
+    # data_sheet = models.URLField(max_length=250, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ItemLinkType(models.Model):
+    name = models.TextField(max_length=250)
+
+    def __str__(self):
+        return self.name
+
+
+class ItemLink(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    link_type = models.ForeignKey(ItemLinkType, on_delete=models.CASCADE)
+    name = models.TextField(max_length=250)
+    url = models.URLField(max_length=250, blank=True)
 
     def __str__(self):
         return self.name
