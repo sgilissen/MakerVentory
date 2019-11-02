@@ -1,0 +1,13 @@
+{% for item in object_list %}
+  <div class="item"
+    {% if forloop.last and page_obj.has_next %}
+      ic-trigger-on="scrolled-into-view"
+      ic-append-from="{% url 'inventory' %}?page={{ page_obj.next_page_number }}"
+      ic-target="#item"
+       ic-indicator="#spinner"
+    {% endif %}
+  >
+    <div class="item__title">{{ item.title }}</div>
+    <div class="item__location">{{ item.location }}</div>
+  </div>
+{% endfor %}
