@@ -1,4 +1,4 @@
-{# artists-results-partial.html #}
+{% load inventory_filters %}
 {% if items %}
 
 <table class="table">
@@ -10,10 +10,10 @@
             <th scope="col">In stock?</th>
         </tr>{% for item in items %}
         <tr>
-            <td>{{ item.name }}</td>
+            <td><a href="itemdetail/{{ item.pk }}" rel="modal:open">{{ item.name }}</a></td>
             <td>{{ item.item_type }}</td>
-            <td>{{ item.location }}</td>
-            <td>{{ item.in_stock|yesno }}</td>
+            <td title="{{ item.location_detail }}">{{ item.location }}</a></td>
+            <td>{{ item.in_stock|iconbool }}</td>
         </tr>{% endfor %}
     </thead>
 </table>

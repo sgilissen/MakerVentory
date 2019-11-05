@@ -41,3 +41,11 @@ def search_view(request):
         return JsonResponse(data=data_dict, safe=False)
 
     return render(request, "search_results.html", context=ctx)
+
+def item_view_detail(request, pk):
+    try:
+        item = Item.objects.get(pk=pk)
+    except Item.DoesNotExist:
+        raise Http404("Item does not exist")
+
+    return render(request, 'item_detail.html', {'item': item})

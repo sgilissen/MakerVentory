@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="modal fade text-center" id="detailmodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
 <div class="row">
     <div>
         <i id="search-icon" class="fas fa-search search-icon"></i><input class="search-box" id="user-input" type="search" placeholder="Search" aria-label="Search">
@@ -10,4 +16,6 @@
     </div>
 
 </div>
+
+
 {% endblock %}

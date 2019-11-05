@@ -1,3 +1,4 @@
+{% load inventory_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +6,11 @@
     <title>Item detail</title>
 </head>
 <body>
-<h1>Item detail: {{ item.name }}</h1>
-<p>Description: {{ item.description }}</p>
-<p>Location: {{ item.location }}</p>
-<p>{{ item.location_detail }}</p>
+<h1>{{ item.name }}</h1>
+<p><strong>Description:</strong> {{ item.description }}<br />
+<p><strong>Location:</strong> {{ item.location }} - {{ item.location_detail }}<br />
+<p></p>
+<p><strong>In stock?</strong> {{ item.in_stock|iconbool }}</p>
 
 </body>
 </html>
