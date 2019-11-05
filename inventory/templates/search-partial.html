@@ -1,0 +1,26 @@
+{# artists-results-partial.html #}
+{% if items %}
+
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Type</th>
+            <th scope="col">Location</th>
+            <th scope="col">In stock?</th>
+        </tr>{% for item in items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.item_type }}</td>
+            <td>{{ item.location }}</td>
+            <td>{{ item.in_stock|yesno }}</td>
+        </tr>{% endfor %}
+    </thead>
+</table>
+
+
+
+
+{% else %}
+  <h2>No items found.</h2>
+{% endif %}

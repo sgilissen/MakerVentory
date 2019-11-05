@@ -1,16 +1,43 @@
 from django.shortcuts import render
-from inventory.models import Item
-from django.views.generic.list import ListView
+from django.views.generic import TemplateView, ListView
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+from django.http import HttpResponse
+from django.db.models import Q
+from .models import Item
 
 
-# Create your views here.
-class ItemList(ListView):
-    paginate_by = 20
+def item_list(request):
+    items = Item.objects.all()
+    return render(request, 'inventory.html', {'items': items})
 
-    def get_template_names(self):
-        if int(self.request.GET.get('page')) > 1:
-            return ['_inventory_items.html']
-        return ['inventory.html']
 
-    def get_queryset(self):
-        return Item.objects.all()
+class HomePageView(TemplateView):
+    template_name = 'home.html'
+
+
+class ItemViewDetail(TemplateView):
+    template_name = 'item_detail.html'
+
+
+def search_view(request):
+    ctx = {}
+    url_param = request.GET.get("q")
+
+    if url_param:
+        items = Item.objects.filter(name__icontains=url_param)
+    else:
+        items = Item.objects.all()
+
+    ctx["items"] = items
+
+    if request.is_ajax():
+        html = render_to_string(
+            template_name = "search-partial.html",
+            context = {"items": items}
+        )
+
+        data_dict = {"html_from_view": html}
+        return JsonResponse(data=data_dict, safe=False)
+
+    return render(request, "search_results.html", context=ctx)

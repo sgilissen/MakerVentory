@@ -1,8 +1,9 @@
 from django.urls import path
 from . import views
+from .views import HomePageView, search_view
 
-#GigsList.as_view(name='gigs')
 app_name = 'inventory'
 urlpatterns = [
-    path('', views.ItemList)
+    path('', search_view, name='items'),
+    path('search/', search_view, name='items')
 ]
