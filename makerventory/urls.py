@@ -18,11 +18,11 @@ from django.urls import path, reverse_lazy, include
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    path('', RedirectView.as_view(url=reverse_lazy('admin:index'))),
+    # path('', RedirectView.as_view(url=reverse_lazy('admin:index'))),
     path('admin/', admin.site.urls),
-    path('inventory/', include('inventory.urls'))
+    path('', include('inventory.urls'))
 ]
 
 admin.site.site_header = 'MakerVentory'
-admin.site.site_url = None
+# admin.site.site_url = None
 admin.site.site_title = 'MakerVentory'
