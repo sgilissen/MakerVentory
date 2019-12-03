@@ -1,5 +1,7 @@
 Django>=2.0,<3.0
 djangorestframework
+python-ldap
+django-auth-ldap
 markdown
 django-filter
 pillow

@@ -1,4 +1,5 @@
 FROM python:3.6.7-alpine3.8
+RUN apk add --no-cache openldap-dev
 RUN apk add --no-cache git
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools
