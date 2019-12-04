@@ -100,6 +100,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# LDAP stuff, for Brixel
+AUTHENTICATION_BACKENDS = [
+    "django_auth_ldap.backend.LDAPBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+AUTH_LDAP_SERVER_URI = "ldap://127.0.0.1"
+AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=People,dc=org,dc=example"
+AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn", "email": "mail"}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
