@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import ldap
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -106,8 +108,9 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-AUTH_LDAP_SERVER_URI = "ldap://127.0.0.1"
-AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=People,dc=org,dc=example"
+AUTH_LDAP_SERVER_URI = "ldap://10.10.20.16:389"
+#AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,cn=users,dc=lan,dc=pulselogic"
+AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,cn=users,dc=pulselogic,dc=lan"
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn", "email": "mail"}
 
 # Internationalization
