@@ -112,9 +112,23 @@ AUTH_LDAP_SERVER_URI = os.environ['LDAP_SERVER_URI']
 AUTH_LDAP_USER_DN_TEMPLATE = os.environ['LDAP_USER_DN_TEMPLATE']
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn", "email": "mail"}
 
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+    os.environ['LDAP_SEARCH_ROOT'], ldap.SCOPE_SUBTREE, "(objectClass=*)"
+)
+AUTH_LDAP_GROUP_TYPE = GroupOfNamesType()
+
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
    "is_staff":     os.environ['LDAP_GROUP_IS_STAFF'],
-   "is_superuser": os.environ['LDAP_GROUP_IS_STAFF'],
+   "is_superuser": os.environ['LDAP_GROUP_IS_SUPERUSER'],
+}
+
+AUTH_LDAP_MIRROR_GROUPS = [os.environ['LDAP_GROUPS_CAN_EDIT'], os.environ['LDAP_GROUPS_READONLY']]
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {"django_auth_ldap": {"level": "DEBUG", "handlers": ["console"]}},
 }
 
 
