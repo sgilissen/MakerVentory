@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,16 +83,9 @@ WSGI_APPLICATION = 'makerventory.wsgi.application'
 DATABASES = {
     'default': env.db(default=f'sqlite:///{BASE_DIR}/db.sqlite3')
 }
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'postgres',
-#        'USER': 'postgres',
-#        'HOST': 'db',
-#        'PORT': 5432,
-#    }
-#}
 
+# Staticfiles storage for whitenoise
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -162,3 +156,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'inventory/static'),
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

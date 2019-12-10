@@ -43,10 +43,10 @@ WORKDIR $CONTAINER_HOME
 RUN mkdir logs
 
 # Copy application source code to $CONTAINER_PROJECT
-COPY . $CONTAINER_PROJECT
+COPY . /opt/makerventory
 
 # Install Python dependencies
-RUN pip3 install -r $CONTAINER_PROJECT/requirements.txt
+RUN pip3 install -r /opt/makerventory/requirements.txt
 RUN pip3 install gunicorn
 
 # Copy and set entrypoint

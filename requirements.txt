@@ -8,4 +8,4 @@ pillow
 gunicorn
 psycopg2-binary
 django-environ
-
+whitenoise
