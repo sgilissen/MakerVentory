@@ -1,16 +1,27 @@
-FROM python:3.6.7-alpine3.8
-RUN apk add --no-cache openldap-dev
-RUN apk add --no-cache git
-RUN pip install --upgrade pip
-RUN pip install --upgrade setuptools
-RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
-ENV LIBRARY_PATH=/lib:/usr/lib
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
-ADD . /app
-EXPOSE 8000
-WORKDIR /app
-ENV PYTHONUNBUFFERED=1
+# Set the base image to Ubuntu
+FROM ubuntu:18.04
+
+# File Author / Maintainer
+MAINTAINER Steve Gilissen
+
+# Update the default application repository sources list
+RUN apt-get update && apt-get install -y \
+    python3-dev \
+    python3 \
+    python3-pip \
+    python3-setuptools \
+    build-essential \
+    python-ldap \
+    libpq-dev \
+    libldap2-dev \
+    libsasl2-dev \
+    git
+
+# Set variables for project name, and where to place files in container.
+ENV PROJECT=makerventory
+ENV CONTAINER_HOME=/opt
+ENV CONTAINER_PROJECT=$CONTAINER_HOME/$PROJECT
+
 # LDAP settings
 ENV LDAP_SERVER_URI="ldap://10.10.20.16:389"
 ENV LDAP_USER_DN_TEMPLATE="uid=%(user)s,cn=users,dc=pulselogic,dc=lan"
@@ -25,4 +36,20 @@ ENV LDAP_GROUP_IS_SUPERUSER="cn=mv_superuser,cn=groups,dc=pulselogic,dc=lan"
 # Please create the required groups in the MakerVentory admin first! You can use a local super user to do so.
 ENV LDAP_GROUPS_CAN_EDIT="mv_canedit"
 ENV LDAP_GROUPS_READONLY="mv_readonly"
-CMD python manage.py runserver 0.0.0.0:8000
+
+
+# Create application subdirectories
+WORKDIR $CONTAINER_HOME
+RUN mkdir logs
+
+# Copy application source code to $CONTAINER_PROJECT
+COPY . $CONTAINER_PROJECT
+
+# Install Python dependencies
+RUN pip3 install -r $CONTAINER_PROJECT/requirements.txt
+RUN pip3 install gunicorn
+
+# Copy and set entrypoint
+WORKDIR $CONTAINER_PROJECT
+COPY ./entrypoint.sh /
+# ENTRYPOINT ["/entrypoint.sh"]

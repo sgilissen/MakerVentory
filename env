@@ -1,0 +1,5 @@
+DB_NAME=makerventory_web
+DB_USER=makerventory_web
+DB_PASS=PltStYJ8tgVXzItsHJ56
+DB_SERVICE=postgres
+DB_PORT=5432

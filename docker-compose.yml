@@ -1,11 +1,48 @@
-version: '3'
+version: "2"
 
 services:
   app:
     build: .
-    volumes:
-      - .:/app:Z
+    container_name: makerventory-gunicorn
+    restart: always
     ports:
       - "8000:8000"
+    command:
+      "gunicorn --workers=2 --bind=0.0.0.0:8000 makerventory.wsgi:application"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      - DATABASE_URL=pgsql://postgres:3x4mpl3p4ss@db/postgres
+    networks:
+      - makerventory
 
+  nginx:
+    image: nginx:1.17
+    container_name: makerventory-ngx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+    links:
+      - app
+    networks:
+      - makerventory
 
+  db:
+    container_name: makerventory-db
+    image: postgres:12.1
+    environment:
+      - POSTGRES_PASSWORD=3x4mpl3p4ss
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - "5432"
+    networks:
+      - makerventory
+networks:
+  makerventory:
+    driver: bridge

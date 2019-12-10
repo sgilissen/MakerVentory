@@ -6,6 +6,4 @@ markdown
 django-filter
 pillow
 gunicorn
-psycopg2-binary
-django-environ
-
+psycopg2
