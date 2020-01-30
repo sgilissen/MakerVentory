@@ -1,4 +1,4 @@
-Django>=2.0,<3.0
+Django>=3.0.1
 djangorestframework
 python-ldap
 django-auth-ldap
