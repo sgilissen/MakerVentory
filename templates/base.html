@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <meta name="theme-color" content="#7952b3">
+</head>
+<body>
+{% include "glyphs.html" %}
+
+<main>
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#makerventory"/></svg>
+            <span class="fs-4">MakerVentory</span>
+        </a>
+        <hr>
+        {% include "nav.html" %}
+
+
+    </div>
+    <div class="b-divider"></div>
+    {% block content %}
+    {% endblock %}
+</main>
+</body>
+</html>
