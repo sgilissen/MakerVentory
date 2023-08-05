@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from . import models
 
 # Create your views here.
 
 
 def index(request):
-    return render(request, 'homegrid.html', context={})
+    context = {
+        'categories': models.Category.objects.all()
+    }
+    return render(request, 'homegrid.html', context=context)

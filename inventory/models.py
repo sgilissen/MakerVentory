@@ -46,6 +46,7 @@ class Container(models.Model):
 
 class Category(models.Model):
     category_name = models.CharField(max_length=250)
+    category_icon = models.FileField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.category_name}"

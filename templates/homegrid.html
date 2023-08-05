@@ -7,8 +7,10 @@
         </p>
         <div class="border-bottom scrollarea">
             <div class="row row-cols-1 row-cols-md-3 g-3 text-center" style="width: 80%;">
-                <div class="col category-button">Cat1</div>
-                <div class="col category-button">Cat2</div>
+                {% for cat in categories %}
+                    <div class="col category-button"><i class="la-microchip"></i><br />{{ cat }}</div>
+
+                {% endfor %}
             </div>
         </div>
     </div>
